@@ -48,9 +48,9 @@ Dealmap uses a [`Hashie::Mash`](https://github.com/intridea/hashie) for return v
 * Initial version
 
 ## Under the hood
-* [`Faraday`](https://github.com/technoweenie/faraday Faraday) REST client
-* [`Typhoeus`](https://github.com/dbalatero/typhoeus Typhoeus) HTTP library
-* [`Hashie::Mash`](http://github.com/intridea/hashie Hashie)  Magic
+* [`Faraday`](https://github.com/technoweenie/faraday) REST client
+* [`Typhoeus`](https://github.com/dbalatero/typhoeus) HTTP library
+* [`Hashie::Mash`](http://github.com/intridea/hashie)  Magic
 
 ## How to contribute
  
