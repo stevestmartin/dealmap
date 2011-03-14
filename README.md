@@ -2,6 +2,7 @@
 
 Simple Ruby wrapper for the Dealmap [API](http://www.thedealmap.com/api/). [TheDealMap](http://thedealmap.com) features deals aggregated from a number of sources, includng Groupon, LivingSocial, Restaurants.com, and more.
 
+
 ## Installation
 
     sudo gem install dealmap
@@ -32,7 +33,7 @@ You'll need a Dealmap [API key](http://www.thedealmap.com/api/keys/).
 ### Get deal details
     deal = client.deal_details(DEAL_ID)    
 
-Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return values, providing a handy hash that supports dot notation:
+Dealmap uses a [`Hashie::Mash`](https://github.com/intridea/hashie) for return values, providing a handy hash that supports dot notation:
 
     deal.title
     => "$100 Gift Certificate, Your Price $40"
@@ -45,6 +46,12 @@ Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return va
 ### 0.0.3 - March 13, 2011
 
 * Initial version
+
+## Under the hood
+* {https://github.com/technoweenie/faraday Faraday} middleware
+* {https://github.com/dbalatero/typhoeus Typhoeus} HTTP client
+* {http://github.com/intridea/hashie Hashie} magic
+
 
 ## How to contribute
  
