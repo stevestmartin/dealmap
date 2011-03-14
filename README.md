@@ -49,6 +49,11 @@ Dealmap uses a [`Hashie::Mash`](https://github.com/intridea/hashie) for return v
 
 * Initial version
 
+### 0.0.4 - March 13, 2011
+
+* Documentation update
+
+
 ## Under the hood
 * [`Faraday`](https://github.com/technoweenie/faraday) REST client
 * [`Typhoeus`](https://github.com/dbalatero/typhoeus) HTTP library
