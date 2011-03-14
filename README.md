@@ -39,7 +39,10 @@ Dealmap uses a [`Hashie::Mash`](https://github.com/intridea/hashie) for return v
     => "$100 Gift Certificate, Your Price $40"
     deal.city
     => "Brooklyn"
-    
+### Issues
+    GitHub issue tracking sucks.
+    http://dealmap.lighthouseapp.com/
+
 <a name="changelog"></a>
 ## Changelog
 
