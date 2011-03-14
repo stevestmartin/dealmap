@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('vcr', '~> 1.7.0')
   s.add_development_dependency('fakeweb')
   s.add_development_dependency('yard', '~> 0.6')
+  s.add_development_dependency('maruku', '~> 0.6')
   s.add_runtime_dependency("faraday", '~> 0.5.7')
   s.add_runtime_dependency("typhoeus", '~> 0.2.4')
   s.add_runtime_dependency('nokogiri', '~> 1.4')

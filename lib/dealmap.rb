@@ -5,6 +5,7 @@ require 'hashie/mash'
 require 'faraday'
 
 module Dealmap
+  # Defines methods for the Dealmap API
   class Client
     attr :api_key, :conn
     def initialize(api_key)
@@ -16,6 +17,30 @@ module Dealmap
       end
     end
 
+    # Search for deals  
+    # @param options [Hash] A customizable set of options  
+    # @option options [String] :l Location around which the deals are searched for. This is a required field. This can be text value or lat/lon value. Examples: Seattle, WA or \+43.324-123.432. Note about geocoding: It is recommended that you send latitude/longitude location as it reduces the need for geo-coding (which may slow down your request) and may not be accurate at all times
+    # @option options [String] :q Query keyword. Optional. For example if you want to find beer deals, you send keyword as your query 'q=beer'. If you want to get all deals, either drop q or send q=\*
+    # @option options [Fixnum] :d Distance around the location specified in the query. Optional. Default value is 5 miles. Always expressed in miles.  
+    # @option options [Fixnum] :si Start index of the deals. Used for paging through the results. Optional. Default value is 0 - which means start from the beginning.  
+    # @option options [Fixnum] :ps Page size. Used for paging through the deal results. Optional. Default page size is 20. Maximum number of deals per page is 100.  
+    # @option options [Fixnum] :a {http://apiwiki.thedealmap.com/index.php/Center%27d_Activity Center'd Activity}. Used to filter the results based on the type of activity. For example, send 1 for kid-friendly deals and 8 for romantic deals etc.
+    # @option options [String] :c {http://apiwiki.thedealmap.com/index.php/Deal_capability Deal capability}. Used to filter the results based on the deal type. For example, to get daily deals only, send c=16.
+    # @option options [String] :ed Expiration date. Used to filter the deals based on their expiration date. For example to get deals that are expiring soon (say by April 22nd 2010), you send ed=2010-04-22
+    # @return [Array, Fixnum] An array of Hashie::Mash objects representing deals.  An integer representing the total number of deals available for retrieval.  Note, this value and the size of the results array may differ, as *total* represents all available deals, not only the ones returned in your query.
+    #
+    # @example Search for deals in Miami, FL and get the total # of deals available
+    #   @client = Dealmap::Client.new("YOUR_API_KEY")
+    #   deals, total = @client.search_deals(:l => "Miami, FL")
+    #   deals.each {|deal| puts deal.inspect }
+    # @example If you don't care about the total, you can ommit it
+    #   deals = @client.search_deals(:l => "Miami, FL")
+    # @example Search for all deals within a 50 mile radius of Miami, FL
+    #   deals = @client.search_deals(:l => "Miami, FL", :d => 50)
+    # @example Search for beer deals within a 50 mile radius of Miami, FL
+    #   deals = @client.search_deals(:l => "Miami, FL", :d => 50, :q => "beer")
+    # @example Search for beer deals within a 50 mile radius of Miami, FL and return 100 results
+    #   deals = @client.search_deals(:l => "Miami, FL", :d => 50, :q => "beer", :ps => 100)
     def search_deals(options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/search/deals/") { |req| req.params = options }
@@ -33,6 +58,29 @@ module Dealmap
       return deals, total
     end
 
+
+    # Search for businesses  
+    # @param options [Hash] A customizable set of options  
+    # @option options [String] :l Location around which the businesses are searched for. This is a required field. This can be text value or lat/lon value. Examples: Seattle, WA or \+43.324-123.432. Note about geocoding: It is recommended that you send latitude/longitude location as it reduces the need for geo-coding (which may slow down your request) and may not be accurate at all times
+    # @option options [String] :q Query keyword. Optional. For example if you want to find bars, you send keyword as your query 'q=bar'. 
+    # @option options [Fixnum] :d Distance around the location specified in the query. Optional. Default value is 5 miles. Always expressed in miles.  
+    # @option options [Fixnum] :si Start index of the businesses. Used for paging through the results. Optional. Default value is 0 - which means start from the beginning.  
+    # @option options [Fixnum] :ps Page size. Used for paging through the business listing results. Optional. Default page size is 20. Maximum number of deals per page is 100.  
+    # @option options [Fixnum] :a {http://apiwiki.thedealmap.com/index.php/Center%27d_Activity Center'd Activity}. Used to filter the results based on the type of activity. For example, send 1 for kid-friendly businesses and 8 for romantic businesses (whatever that means) etc.
+    # @return [Array, Fixnum] An array of Hashie::Mash objects representing businesses.  An integer representing the total number of businesses available for retrieval.  Note, this value and the size of the results array may differ, as *total* represents all available businesses, not only the ones returned in your query.
+    #
+    # @example Search for businesses in Miami, FL and get the total # of deals available
+    #   @client = Dealmap::Client.new("YOUR_API_KEY")
+    #   businesses, total = @client.search_businesses(:l => "Miami, FL")
+    #   businesses.each {|business| puts business.inspect }
+    # @example If you don't care about the total, you can ommit it
+    #   businesses = @client.search_businesses(:l => "Miami, FL")
+    # @example Search for all businesses within a 50 mile radius of Miami, FL
+    #   businesses = @client.search_businesses(:l => "Miami, FL", :d => 50)
+    # @example Search for bars within a 50 mile radius of Miami, FL
+    #   businesses = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar")
+    # @example Search for bars within a 50 mile radius of Miami, FL and return 100 results
+    #   businesses = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar", :ps => 100)
     def search_businesess(options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/search/businesses/") { |req| req.params = options }
@@ -50,7 +98,11 @@ module Dealmap
       return businesses, total
     end
 
-    def details(deal_id, options = {})
+    # Get details for a deal
+    # @param deal_id [String] A deal id
+    # @param options [Hash] An optional set of options.  Currently unused.
+    # @return [Hashie::Mash] A Hashie::Mash object representing a deal
+    def deal_details(deal_id, options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/deals/#{deal_id}") { |req| req.params = options }
       doc = Nokogiri::XML(response.body)

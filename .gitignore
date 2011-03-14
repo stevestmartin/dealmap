@@ -5,3 +5,5 @@ pkg/*
 *.swp
 *.swo
 coverage
+doc
+.yardoc
