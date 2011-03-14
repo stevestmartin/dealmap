@@ -28,7 +28,7 @@ module Dealmap
     # @option options [Fixnum] :si Start index of the deals. Used for paging through the results. Optional. Default value is 0 - which means start from the beginning.  
     # @option options [Fixnum] :ps Page size. Used for paging through the deal results. Optional. Default page size is 20. Maximum number of deals per page is 100.  
     # @option options [Fixnum] :a {http://apiwiki.thedealmap.com/index.php/Center%27d_Activity Center'd Activity}. Used to filter the results based on the type of activity. For example, send 1 for kid-friendly deals and 8 for romantic deals etc.
-    # @option options [String] :c {http://apiwiki.thedealmap.com/index.php/Deal_capability Deal capability}. Used to filter the results based on the deal type. For example, to get daily deals only, send c=16.
+    # @option options [Fixnum] :c {http://apiwiki.thedealmap.com/index.php/Deal_capability Deal capability}. Used to filter the results based on the deal type. For example, to get daily deals only, send c=16.
     # @option options [String] :ed Expiration date. Used to filter the deals based on their expiration date. For example to get deals that are expiring soon (say by April 22nd 2010), you send ed=2010-04-22
     # @return [Array, Fixnum] An array of Hashie::Mash objects representing deals.  An integer representing the total number of deals available for retrieval.  Note, this value and the size of the results array may differ, as *total* represents all available deals, not only the ones returned in your query.
     #
