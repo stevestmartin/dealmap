@@ -17,7 +17,7 @@ You'll need a Dealmap [API key](http://www.thedealmap.com/api/keys/).
     deals, total = client.search_deals(:l => "Brooklyn, NY")
 
 ### Searching for deals based on lat/lng (Brooklyn, NY)
-    deals, total = client.search_deals(:l => 40.6500000, -73.9500000")
+    deals, total = client.search_deals(:l => "40.6500000, -73.9500000")
 
 Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return values, providing a handy hash that supports dot notation:
 
@@ -25,10 +25,6 @@ Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return va
     => "$100 Gift Certificate, Your Price $40"
     deals.first.city
     => "Brooklyn"
-        
-### Finding deals by division
-
-    deals = Groupon.deals(:division => 'dallas')
     
 <a name="changelog"></a>
 ## Changelog
@@ -47,5 +43,4 @@ Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return va
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-Copyright (c) 2011 [Josh Deeden](http://twitter.com/jdeeden). See LICENSE for details.
-
+Copyright (c) 2011 [Josh Deeden](http://twitter.com/jdeeden). 
