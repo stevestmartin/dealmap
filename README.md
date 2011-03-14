@@ -33,9 +33,9 @@ You'll need a Dealmap [API key](http://www.thedealmap.com/api/keys/).
 
 Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return values, providing a handy hash that supports dot notation:
 
-    deals.first.title
+    deal.title
     => "$100 Gift Certificate, Your Price $40"
-    deals.first.city
+    deal.city
     => "Brooklyn"
     
 <a name="changelog"></a>
