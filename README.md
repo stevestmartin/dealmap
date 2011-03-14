@@ -10,6 +10,7 @@ Simple Ruby wrapper for the Dealmap [API](http://www.thedealmap.com/api/). [TheD
 
 You'll need a Dealmap [API key](http://www.thedealmap.com/api/keys/).
 
+### Instantiate
     require 'dealmap'
     client = Dealmap::Client.new(YOUR_API_KEY)
     
