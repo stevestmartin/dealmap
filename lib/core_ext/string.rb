@@ -1,4 +1,6 @@
+# Custom string extensions
 class String
+  # {http://www.urbandictionary.com/define.php?term=ganked Ganked} from ActiveSupport::Inflections.  Works the same way it does in rails.
   def underscore
     word = self.to_s.dup
     word.gsub!(/::/, '/')

@@ -4,10 +4,13 @@ require "ext/string"
 require 'hashie/mash'
 require 'faraday'
 
+# The Dealmap namespace.
 module Dealmap
   # Defines methods for the Dealmap API
   class Client
     attr :api_key, :conn
+    # Initialize the Dealmap client
+    # @param api_key [String] Your Dealmap API Key
     def initialize(api_key)
       raise Dealmap::ApiKeyMissingError, "You must supply an API key" if api_key.nil?
       @api_key = api_key
@@ -33,14 +36,12 @@ module Dealmap
     #   @client = Dealmap::Client.new("YOUR_API_KEY")
     #   deals, total = @client.search_deals(:l => "Miami, FL")
     #   deals.each {|deal| puts deal.inspect }
-    # @example If you don't care about the total, you can ommit it
-    #   deals = @client.search_deals(:l => "Miami, FL")
     # @example Search for all deals within a 50 mile radius of Miami, FL
-    #   deals = @client.search_deals(:l => "Miami, FL", :d => 50)
+    #   deals, total = @client.search_deals(:l => "Miami, FL", :d => 50)
     # @example Search for beer deals within a 50 mile radius of Miami, FL
-    #   deals = @client.search_deals(:l => "Miami, FL", :d => 50, :q => "beer")
+    #   deals, total = @client.search_deals(:l => "Miami, FL", :d => 50, :q => "beer")
     # @example Search for beer deals within a 50 mile radius of Miami, FL and return 100 results
-    #   deals = @client.search_deals(:l => "Miami, FL", :d => 50, :q => "beer", :ps => 100)
+    #   deals, total = @client.search_deals(:l => "Miami, FL", :d => 50, :q => "beer", :ps => 100)
     def search_deals(options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/search/deals/") { |req| req.params = options }
@@ -73,14 +74,12 @@ module Dealmap
     #   @client = Dealmap::Client.new("YOUR_API_KEY")
     #   businesses, total = @client.search_businesses(:l => "Miami, FL")
     #   businesses.each {|business| puts business.inspect }
-    # @example If you don't care about the total, you can ommit it
-    #   businesses = @client.search_businesses(:l => "Miami, FL")
     # @example Search for all businesses within a 50 mile radius of Miami, FL
-    #   businesses = @client.search_businesses(:l => "Miami, FL", :d => 50)
+    #   businesses, total = @client.search_businesses(:l => "Miami, FL", :d => 50)
     # @example Search for bars within a 50 mile radius of Miami, FL
-    #   businesses = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar")
+    #   businesses, total = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar")
     # @example Search for bars within a 50 mile radius of Miami, FL and return 100 results
-    #   businesses = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar", :ps => 100)
+    #   businesses, total = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar", :ps => 100)
     def search_businesess(options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/search/businesses/") { |req| req.params = options }
@@ -98,10 +97,56 @@ module Dealmap
       return businesses, total
     end
 
-    # Get details for a deal
+    # Get deal details.
     # @param deal_id [String] A deal id
     # @param options [Hash] An optional set of options.  Currently unused.
     # @return [Hashie::Mash] A Hashie::Mash object representing a deal
+    # @example Example response:
+    #   {"activity"=>"0",
+    #    "added_by"=>"",
+    #    "additional_discount_coupon_code"=>"",
+    #    "additional_discount_coupon_effective_time"=>"0001-01-01T00:00:00",
+    #    "additional_discount_coupon_expiration_time"=>"0001-01-01T00:00:00",
+    #    "additional_discount_deal_unit"=>"0",
+    #    "additional_discounted_value"=>"0",
+    #    "address_line"=>"7726 W Sand Lake Rd",
+    #    "affiliation"=>"",
+    #    "b_description"=>"",
+    #    "business_id"=>"",
+    #    "business_name"=>"Shala Salon & Spa",
+    #    "capability"=>"211",
+    #    "category"=>"Beauty & Spas,Waxing",
+    #    "city"=>"Orlando",
+    #    "country"=>"",
+    #    "currency"=>"1",
+    #    "deal_source"=>"Groupon",
+    #    "deal_type"=>"8",
+    #    "deal_unit"=>"1",
+    #    "description"=>"",
+    #    "discounted_value"=>"10",
+    #    "effective_time"=>"2011-03-13T03:01:00",
+    #    "expiration_time"=>"2011-03-13T20:59:00",
+    #    "face_value"=>"20",
+    #    "id"=>"5-4A3EDD412F8C1ECF7F5A6AEDDAF7DA2A",
+    #    "icon_url"=>"",
+    #    "image_url"=>
+    #    "http://www.groupon.com/images/site_images/0686/1969/Shala-Salon-_-Spa.jpg",
+    #    "keywords"=>"",
+    #    "latitude"=>"28.4498819801956",
+    #    "longitude"=>"-81.4899128861725",
+    #    "more_info_link"=>
+    #    "http://www.thedealmap.com/deal/?dealid=5-4A3EDD412F8C1ECF7F5A6AEDDAF7DA2A&s=2-500726978-634341593775180000&utm_campaign=api",
+    #    "phone"=>"",
+    #    "state"=>"FL",
+    #    "tags"=>"",
+    #    "terms"=>"",
+    #    "title"=>
+    #    "$20 For A Full-Face Threading ($40 Value) Or $10 For An Eyebrow Threading ($20 Value) At Shala Salon & Day Spa",
+    #    "tracking_url"=>"",
+    #    "transaction_url"=>
+    #    "http://www.thedealmap.com/x/?s=2-500726978-634341593775180000&id=5-4A3EDD412F8C1ECF7F5A6AEDDAF7DA2A",
+    #    "you_save"=>"50 %",
+    #    "zip_code"=>""}
     def deal_details(deal_id, options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/deals/#{deal_id}") { |req| req.params = options }
