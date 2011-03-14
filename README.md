@@ -16,8 +16,20 @@ You'll need a Dealmap [API key](http://www.thedealmap.com/api/keys/).
 ### Searching for deals in Brooklyn, NY
     deals, total = client.search_deals(:l => "Brooklyn, NY")
 
+### Searching for deals in Brooklyn, NY, return 100 results.
+    deals, total = client.search_deals(:l => "Brooklyn, NY", :ps => 100)
+
+### Searching for beer deals in Brooklyn, NY, return 100 results.
+    deals, total = client.search_deals(:l => "Brooklyn, NY", :ps => 100, :q => "beer")
+
+### Searching for beer deals within 10 miles of  Brooklyn, NY, return 100 results.
+    deals, total = client.search_deals(:l => "Brooklyn, NY", :ps => 100, :q => "beer", :d => 10)    
+
 ### Searching for deals based on lat/lng (Brooklyn, NY)
     deals, total = client.search_deals(:l => "40.6500000, -73.9500000")
+
+### Get deal details
+    deal = client.deal_details(DEAL_ID)    
 
 Dealmap uses a [`Hashie::Mash`](http://github.com/intridea/hashie) for return values, providing a handy hash that supports dot notation:
 
