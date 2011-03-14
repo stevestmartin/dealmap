@@ -40,8 +40,8 @@ Dealmap uses a [`Hashie::Mash`](https://github.com/intridea/hashie) for return v
     deal.city
     => "Brooklyn"
 ### Issues
-    GitHub issue tracking sucks.  Submit issues to Lighthouse.
-    <http://dealmap.lighthouseapp.com/>
+  GitHub issue tracking sucks.  Submit issues to Lighthouse.
+  [`Issues`](https://dealmap.lighthouseapp.com)
 
 <a name="changelog"></a>
 ## Changelog
