@@ -1,6 +1,6 @@
 require 'typhoeus'
 require 'nokogiri'
-require "ext/string"
+require 'core_ext/string'
 require 'hashie/mash'
 require 'faraday'
 
