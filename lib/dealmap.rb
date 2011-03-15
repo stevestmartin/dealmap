@@ -80,7 +80,7 @@ module Dealmap
     #   businesses, total = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar")
     # @example Search for bars within a 50 mile radius of Miami, FL and return 100 results
     #   businesses, total = @client.search_businesses(:l => "Miami, FL", :d => 50, :q => "bar", :ps => 100)
-    def search_busineses(options = {})
+    def search_businesses(options = {})
       options = options.merge(:key => api_key)
       response = conn.get("/search/businesses/") { |req| req.params = options }
       doc = Nokogiri::XML(response.body)
