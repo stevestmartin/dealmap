@@ -8,7 +8,7 @@ require 'faraday'
 module Dealmap
   # Defines methods for the Dealmap API
   class Client
-    attr :api_key, :conn
+    attr_reader :api_key, :conn
     # Initialize the Dealmap client
     # @param api_key [String] Your Dealmap API Key
     def initialize(api_key)
